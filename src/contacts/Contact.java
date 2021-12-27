@@ -1,25 +1,31 @@
 package contacts;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Contact {
-    private String name;
-    private String surname;
-    private String phoneNumber;
+    protected String phoneNumber;
+    protected LocalDateTime created;
+    protected LocalDateTime edited;
 
-    public Contact(String name, String surname, String phoneNumber) {
-        this.name = name;
-        this.surname = surname;
+    public Contact(String phoneNumber) {
         this.setContact(phoneNumber);
+        created = LocalDateTime.now();
+        edited = LocalDateTime.now();
     }
 
-    public String getName() {
-        return name;
+    public String who(){
+        return "Unknown who";
     }
 
-    public String getSurname() {
-        return surname;
+    public void fields() {
+        System.out.println("Contact class");
+    }
+
+    public void showYourself(){
+        System.out.println("Unknown showYourself");
     }
 
     public String getPhoneNumber() {
@@ -39,10 +45,20 @@ public class Contact {
     }
 
     public void setName(String name) {
-        this.name = name;
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
     }
+
+    public void setBirthdate(LocalDate birthdate) {
+
+    }
+
+    public void setGender(String gender) {
+
+    }
+
+    public void editAddress(String name) {
+    }
+
 }
