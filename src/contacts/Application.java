@@ -10,6 +10,7 @@ public class Application {
 
     public Application() {
         data = new Data();
+        System.out.println("open phonebook.db\n");
         mainMenu();
     }
 
@@ -67,30 +68,23 @@ public class Application {
     }
 
 
-    public void editMenu () {
+    public void editMenu (int num) {
         if(data.arrayCheck()) {
             System.out.println("No records to edit!");
         }else {
-            data.showContacts();
-            System.out.print("Select a record: ");
             Scanner scanner = new Scanner(System.in);
-            int inputik = scanner.nextInt();
-            data.contacts.get(--inputik).fields();
+            data.contacts.get(--num).fields();
             String word = scanner.next();
-            data.editContact(inputik,word);
+            data.editContact(num,word);
         }
     }
 
 
-    public void removeMenu () {
+    public void removeMenu (int n) {
         if(data.arrayCheck()) {
             System.out.println("No records to remove!");
         }else {
-            data.showContacts();
-            System.out.print("Select a record: ");
-            Scanner scanner = new Scanner(System.in);
-            int inputik = scanner.nextInt();
-            data.removeContact(inputik);
+            data.removeContact(n);
         }
     }
 
@@ -100,28 +94,84 @@ public class Application {
         }else this.isPerson = false;
     }
 
+    public void searching(){
+        System.out.print("Enter search query: ");
+        Scanner scanner = new Scanner(System.in);
+        String inputSearch = scanner.nextLine();
+        data.searchName(inputSearch);
+
+        System.out.print("[search] Enter action ([number], back, again): ");
+
+        String inText = scanner.next();
+        if (inText.equals("back")){
+
+        }else if(inText.equals("again")){
+            searching();
+        } else if(inText.matches("\\D+")){
+            System.out.println("Wrong input");
+            searching();
+        }else{
+            int number = Integer.valueOf(inText);
+            data.information(number);
+            recordMenu(number);
+        }
+    }
+
+    public void recordMenu(int num) {
+        boolean beh = true;
+        while(beh){
+            System.out.print("[record] Enter action (edit, delete, menu): ");
+            Scanner scanner = new Scanner(System.in);
+            String inputSearch = scanner.nextLine();
+            if(inputSearch.equals("menu")){
+                beh = false;
+                break;
+            }else if(inputSearch.equals("edit")){
+                editMenu(num);
+            }else if(inputSearch.equals("delete")){
+                removeMenu(num);
+            }
+        }
+    }
+
+    public void listMenu() {
+
+        data.showContacts();
+        System.out.print("[list] Enter action ([number], back): ");
+        Scanner scanner = new Scanner(System.in);
+        String inText = scanner.next();
+        if (inText.equals("back")){
+
+        }else if(inText.matches("\\D+")){
+            System.out.println("Wrong input");
+            listMenu();
+        }else{
+            int number = Integer.valueOf(inText);
+            data.information(number);
+            recordMenu(number);
+        }
+
+    }
+
+
     public void mainMenu () {
         boolean run = true;
         while(run) {
             Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter action (add, remove, edit, count, info, exit): ");
+            System.out.print("[menu] Enter action (add, list, search, count, exit): ");
             String input = scanner.nextLine();
             switch(input) {
                 case "add":
                     addMenu();
                     break;
-                case "remove":
-                    removeMenu();
+                case "list":
+                    listMenu();
                     break;
-                case "edit":
-                    editMenu();
+                case "search":
+                    searching();
                     break;
                 case "count":
                     System.out.println("The Phone Book has " + data.countContacts() +" records.");
-                    break;
-                case "info":
-                    data.showContacts();
-                    data.information();
                     break;
                 case "exit":
                     run = false;
