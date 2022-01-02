@@ -16,6 +16,10 @@ public class Person extends Contact{
         this.gender = gender;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public void setName(String name) {
         this.name = name;
@@ -41,7 +45,7 @@ public class Person extends Contact{
 
     @Override
     public void fields() {
-        System.out.println("Select a field (name, surname, birth, gender, number):");
+        System.out.print("Select a field (name, surname, birth, gender, number): ");
     }
 
     @Override

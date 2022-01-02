@@ -16,6 +16,10 @@ public class Contact {
         edited = LocalDateTime.now();
     }
 
+    public String getName() {
+        return "nothing";
+    }
+
     public String who(){
         return "Unknown who";
     }
@@ -43,6 +47,8 @@ public class Contact {
             this.phoneNumber = "[no number]";
         }
     }
+
+
 
     public void setName(String name) {
     }

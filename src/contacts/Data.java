@@ -15,7 +15,7 @@ public class Data {
     public void showContacts () {
         Scanner scanner = new Scanner(System.in);
         if(contacts.isEmpty()) {
-            System.out.println("No records to remove!");
+            System.out.println("No records to show!");
         }else {
             int j = 0;
             for (int i = 0; i < contacts.size(); i++) {
@@ -24,11 +24,35 @@ public class Data {
         }
     }
 
-    public void information() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter index to show info: ");
-        int showIndex = scanner.nextInt();
-        contacts.get(--showIndex).showYourself();
+    public void searchName(String slovo) {
+        int cislo = 0;
+        for(int i = 0; i < contacts.size(); i++) {
+            if(contacts.get(i).who().toLowerCase().contains(slovo) || contacts.get(i).getName().toLowerCase().contains(slovo)){
+                cislo++;
+            }
+        }
+        for(int i = 0; i < contacts.size(); i++) {
+            if(contacts.get(i).getPhoneNumber().contains(slovo) || contacts.get(i).getPhoneNumber().contains(slovo)){
+                cislo++;
+            }
+        }
+        System.out.println("Found "+ cislo +" results:");
+        int k = 1;
+        for(int i = 0; i < contacts.size(); i++) {
+            if(contacts.get(i).getPhoneNumber().contains(slovo) || contacts.get(i).getPhoneNumber().contains(slovo)){
+                System.out.println(k++ + ". " + contacts.get(i).who());
+            }
+        }
+        for(int i = 0; i < contacts.size(); i++) {
+            if(contacts.get(i).who().toLowerCase().contains(slovo) || contacts.get(i).getName().toLowerCase().contains(slovo)){
+                System.out.println(k++ + ". " + contacts.get(i).who());
+            }
+        }
+        System.out.println();
+    }
+
+    public void information(int num) {
+        contacts.get(--num).showYourself();
     }
 
     public int countContacts () {
@@ -77,8 +101,9 @@ public class Data {
             temp = scanner.nextLine();
             contacts.get(i).setName(temp);
         }
-        System.out.println("The record updated!\n");
+        System.out.println("Saved");
         contacts.get(i).edited = LocalDateTime.now();
+        information(i+1);
     }
 
     public boolean arrayCheck () {
